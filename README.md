@@ -27,4 +27,5 @@ All the files related to the task are in `/2-standard-library` folder.
 
 ### Notes
 
-In the `/2-standard-library` there is a folder `dev` it has files I used for learning. All the task related code is in the `/2-standard-library/index.js` file and `/2-standard-library/utils` folder.
+- In the `/2-standard-library` there is a folder `dev` it has files I used for learning. All the task related code is in the `/2-standard-library/index.js` file and `/2-standard-library/utils` folder.
+- I tested it in `Windows` and `MacOS`. However, when run in `Windows`, the `powershell` command takes up to 3-4 seconds to execute, so I am not sure how to meet requirements to update log 10 times per second.
