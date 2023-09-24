@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js",
+    "start-introduction": "nodemon ./1-introduction-to-nodejs",
+    "start-standard-library": "nodemon ./2-standard-library",
+    "start-standard-library-node": "node ./2-standard-library",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
