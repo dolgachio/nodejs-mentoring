@@ -34,4 +34,6 @@ All the files related to the task are in `/2-standard-library` folder.
 
 ### Scripts
 
-- `npm run start-eventemitter-buffer-streams`: starts `/2-eventemitter-buffer-streams/index.js` file using `nodeman` package.
+## Task 1
+
+- `npm run start-eventemitter-buffer-streams-1`: starts `/2-eventemitter-buffer-streams/task1/index.js` file using `nodeman` package.
