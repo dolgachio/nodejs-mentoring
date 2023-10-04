@@ -21,7 +21,7 @@ class WithTime extends EventEmitter {
     performance.clearMarks();
     performance.clearMeasures();
   }
-  
+
   async execute(asyncFunc, ...args) {
     if (!asyncFunc) {
       return;
@@ -39,7 +39,8 @@ class WithTime extends EventEmitter {
       const duration = this.#endTimeMeasure();
 
       // Output
-      console.log(`[WithTime] asyncFunc execution end, duration: ${duration}ms, data: ${data}`);
+      const dataString = JSON.stringify(data);
+      console.log(`[WithTime] asyncFunc execution end, duration: ${duration}ms, data: ${dataString}`);
       this.emit("end", { data, duration });
     } catch (error) {
       console.error(`[WithTime] ERROR: ${error}`);

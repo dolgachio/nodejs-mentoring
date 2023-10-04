@@ -9,12 +9,14 @@
     "start-standard-library-node": "node ./2-standard-library",
     "start-eventemitter-buffer-streams-1": "nodemon ./3-eventemitter-buffer-streams/task1",
     "start-eventemitter-buffer-streams-2": "nodemon ./3-eventemitter-buffer-streams/task2",
+    "start-eventemitter-buffer-streams-3": "nodemon ./3-eventemitter-buffer-streams/task3",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "csvtojson": "^2.0.10",
     "nodemon": "^3.0.1"
   }
 }
