@@ -1,2 +1,4 @@
 /node_modules
 /2-standard-library/activityMonitor.log
+/4-testing/coverage
+**/node_modules
