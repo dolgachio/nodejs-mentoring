@@ -1,5 +1,9 @@
 ## Testing in Node.js
 
+### Installation
+
+Run script from this folder: `npm install`, it installs all dependencies.
+
 ### Scripts
 
 - `npm test`: run all tests
