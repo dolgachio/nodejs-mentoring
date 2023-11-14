@@ -12,12 +12,7 @@ jest.mock("axios", () => ({
   get: jest.fn(),
 }));
 
-jest.mock(
-  "../helpers" /*() => ({
-  validateInput: jest.fn(),
-  shortenPublicHoliday: jest.fn(),
-})*/
-);
+jest.mock("../helpers");
 
 describe("public-holidays.service", () => {
   let getPublicHolidayPromise: Promise<Partial<AxiosResponse<PublicHoliday[]>>>;

@@ -8,3 +8,5 @@
 ## Notes
 
 - `/coverage` folder with coverage result is added to the `.gitignore` 
+- Integration tests: `./src/services/public-holidays.service.integration.spec.ts`
+- e2e tests: `./src/nager-date-api.e2e.spec.ts`
