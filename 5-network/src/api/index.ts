@@ -1,12 +1,15 @@
 import http from "http";
+import { apiRouter } from "./endpoints";
 
 export function start(port: number) {
-    const server = http.createServer((req, res) => {
-        res.statusCode = 200;
-        res.setHeader('Content-Type', 'text/plain');
-        res.end('Hello, World!');
-    });
+  apiRouter.init();
 
-    console.log(`========> Server is listening on PORT: ${port}`)
-    server.listen(port);
+  const server = http.createServer((req, res) =>
+    apiRouter.requestHandler(req, res)
+  );
+
+  console.log(`========> Server is listening: http://localhost:${port}`);
+  server.listen(port);
+
+  return apiRouter.reset;
 }

@@ -1,11 +1,21 @@
 import { User } from "../models";
 
+interface Store {
+    getAllUsers: () => User[];
+    getUserById: (id: number) => User | null;
+}
+
 let storedUsers: User[] = [];
 
-export function getAllUsers(): User[] {
+function getAllUsers(): User[] {
     return storedUsers;
 }
 
-export function getUserById(id: number): User | null {
+function getUserById(id: number): User | null {
     return storedUsers.find(user => user.id === id) || null;
+}
+
+export const store: Store = {
+    getAllUsers,
+    getUserById,
 }
