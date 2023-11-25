@@ -17,6 +17,8 @@ export const apiRouterRequestHandler: HandleRequest = async (req, res) => {
   const method = req.method || "";
   const url = req.url || "";
 
+  console.log(`${method}: ${url} : ${(new Date()).toISOString()}`);
+
   for (let resource of resources) {
     const [canHandleRequest, handleRequest] = resource;
 

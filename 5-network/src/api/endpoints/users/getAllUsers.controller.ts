@@ -29,4 +29,4 @@ const applyGetUsers: HandleRequest = (_, res) => {
     res.end(JSON.stringify(responseData));
 };
 
-export const getUsersResource: Resource = [isGetUsers, applyGetUsers];
+export const getAllUsersResource: Resource = [isGetUsers, applyGetUsers];

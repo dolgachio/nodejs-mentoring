@@ -8,9 +8,9 @@
 
 ## TODO
 
-1. Create/delete user.
+1. ✅ Create/delete user.
 2. Partially update user properties.
-3. Retrieve user by id, list of users. Returns only user data, no hobbies are returned.
+3. ✅ Retrieve user by id, list of users. Returns only user data, no hobbies are returned.
 4. Add/delete hobby for a specific user.
 5. Get a list of user hobbies.
 

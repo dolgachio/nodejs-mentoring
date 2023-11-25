@@ -40,7 +40,7 @@ const handleRequest: HandleRequest = async (req, res) => {
     const newUser = getNewUserFromDTO(bodyParsed);
     store.createNewUser(newUser);
 
-    res.statusCode = StatusCodes.OK;
+    res.statusCode = StatusCodes.CREATED;
     setResponseContentTypeHeader(res, ContentTypes.Text);
     res.end("User Created");
 

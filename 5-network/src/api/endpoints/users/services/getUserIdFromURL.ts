@@ -1,14 +1,13 @@
-import { Endpoints } from "../../Endpoints.enum";
+import { uuidRegExpString } from "../../../../constants/uuidRegExpString";
 
 export function getUserIdFromURL(url: string): string | null {
     const urlLowerCased = url.toLowerCase();
-    
-    const urlParts = urlLowerCased.split("/").filter((item) => !!item);
-    
-    if (urlParts.length !== 2 || `/${urlParts[0]}` !== Endpoints.Users) {
-        return null;
+    const uuidRegExp = new RegExp(uuidRegExpString);
+    const result = urlLowerCased.match(uuidRegExp);
+
+    if (!result) {
+        return null
     }
-
-
-    return urlParts[1] || null;
+    
+    return result[0] || null;
 }
