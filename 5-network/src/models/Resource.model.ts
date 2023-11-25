@@ -5,7 +5,7 @@ export interface CanHandleRequest {
 }
 
 export interface HandleRequest {
-    (req: IncomingMessage, res: ServerResponse): void;
+    (req: IncomingMessage, res: ServerResponse): void | Promise<void>;
 }
 
 export type Resource = [CanHandleRequest, HandleRequest];

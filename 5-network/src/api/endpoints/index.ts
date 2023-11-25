@@ -1,44 +1,53 @@
-import { Resource, HandleRequest } from "../../models/Resource";
-import { applyNotFound } from "./NotFound";
-import { getUsersResource } from "./users/getUsers";
+import { InternalServerError } from "../../models/InternalServerError";
+import { Resource, HandleRequest } from "../../models/Resource.model";
+import { handleInternalServerError } from "./internalServerError";
+import { handleNotFound } from "./notFound1";
+
+import { usersResources } from "./users";
 
 let resources: Resource[] = [];
 
 interface ApiRouter {
-    init: () => void;
-    requestHandler: HandleRequest;
-    reset: () => void;
+  init: () => void;
+  requestHandler: HandleRequest;
+  reset: () => void;
 }
 
-export const apiRouterRequestHandler: HandleRequest = (req, res) => {
-    const method = req.method || "";
-    const url = req.url || "";
+export const apiRouterRequestHandler: HandleRequest = async (req, res) => {
+  const method = req.method || "";
+  const url = req.url || "";
 
-    for (let resource of resources) {
-        const [canHandleRequest, handleRequest] = resource;
-        
-        if (canHandleRequest({ method, url })) {
-            handleRequest(req, res);
+  for (let resource of resources) {
+    const [canHandleRequest, handleRequest] = resource;
 
-            return;
+    if (canHandleRequest({ method, url })) {
+      try {
+        await handleRequest(req, res);
+      } catch (error) {
+        if (error instanceof InternalServerError) {
+          handleInternalServerError(req, res);
+          // Stop Everything
+          return;
+        } else {
+          throw error;
         }
-    }
+      }
 
-    applyNotFound(req, res);
+      // Stop Everything
+      return;
+    }
+  }
+
+  handleNotFound(req, res);
 };
 
 export const apiRouter: ApiRouter = {
-    init() {
-        resources = [
-            getUsersResource,
-        ]
-    },
+  init() {
+    resources = [...usersResources];
+  },
 
-    requestHandler: apiRouterRequestHandler,
-    reset() {
-        resources = [];
-    }
-}
-
-
-
+  requestHandler: apiRouterRequestHandler,
+  reset() {
+    resources = [];
+  },
+};

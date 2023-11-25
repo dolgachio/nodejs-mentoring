@@ -1,6 +1,12 @@
 export interface User {
-    id: number;
+    id: string;
     name: string;
     email: string;
     hobbies: string[];
+}
+
+export interface UserDTO {
+    name: string;
+    email: string;
+    hobbies?: string[];
 }

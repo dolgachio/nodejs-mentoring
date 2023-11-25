@@ -1,3 +1,4 @@
+import { ContentTypes } from "../../../constants/ContentTypes";
 import { RestMethods } from "../../../constants/RestMethods";
 import { User } from "../../../models";
 import { DefaultDTO } from "../../../models/DefaultDTO";
@@ -5,9 +6,13 @@ import {
   Resource,
   HandleRequest,
   CanHandleRequest,
-} from "../../../models/Resource";
+} from "../../../models/Resource.model";
 import { store } from "../../../store";
+import { setResponseContentTypeHeader } from "../../../utils/setResponseContentTypeHeader";
 import { Endpoints } from "../Endpoints.enum";
+import {
+	StatusCodes,
+} from 'http-status-codes';
 
 const isGetUsers: CanHandleRequest = ({ method, url }) => {
   const isGetMethod = method === RestMethods.GET;
@@ -16,8 +21,8 @@ const isGetUsers: CanHandleRequest = ({ method, url }) => {
 };
 
 const applyGetUsers: HandleRequest = (_, res) => {
-    res.statusCode = 200;
-    res.setHeader("Content-Type", "application/JSON");
+    res.statusCode = StatusCodes.OK;
+    setResponseContentTypeHeader(res, ContentTypes.JSON);
     
     const responseData: DefaultDTO<User[]> = { data: store.getAllUsers() };
     
