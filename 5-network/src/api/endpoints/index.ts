@@ -1,7 +1,7 @@
 import { InternalServerError } from "../../models/InternalServerError";
 import { Resource, HandleRequest } from "../../models/Resource.model";
 import { handleInternalServerError } from "./internalServerError";
-import { handleNotFound } from "./notFound1";
+import { handleNotFound } from "./notFound";
 
 import { usersResources } from "./users";
 
