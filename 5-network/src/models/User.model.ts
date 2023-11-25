@@ -1,3 +1,8 @@
+export interface UserPatch {
+    name?: unknown;
+    email?: unknown;
+}
+
 export interface UserCore {
   id: string;
   name: string;
