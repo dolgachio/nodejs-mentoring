@@ -13,6 +13,8 @@ import { StatusCodes } from "http-status-codes";
 import { isUserByIdURL } from "./services/isUserByIdURL";
 import { getHttpRequestBody } from "../../../utils/getHttoRequestBody";
 
+// Endpoint
+// PUT/PATCH: /users/${userId}
 const canHandle: CanHandleRequest = ({ method, url }) => {
   return (
     isUserByIdURL(url, method, RestMethods.PUT) ||

@@ -14,6 +14,8 @@ import { getHttpRequestBody } from "../../../utils/getHttoRequestBody";
 import { isUserByIdHobbiesURL } from "./services/isUserByIdHobbiesURL";
 import { DefaultDTO } from "../../../models/DefaultDTO";
 
+// Endpoint
+// DELETE: /users/${userId}/hobbies
 const canHandle: CanHandleRequest = ({ method, url }) => {
   return isUserByIdHobbiesURL(url, method, RestMethods.DELETE);
 };

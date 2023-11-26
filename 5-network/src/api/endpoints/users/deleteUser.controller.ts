@@ -12,6 +12,8 @@ import { getUserIdFromURL } from "./services/getUserIdFromURL";
 import { StatusCodes } from "http-status-codes";
 import { isUserByIdURL } from "./services/isUserByIdURL";
 
+// Endpoint
+// DELETE: /users/${userId}
 const canHandle: CanHandleRequest = ({ method, url }) => {
   return isUserByIdURL(url, method, RestMethods.DELETE);
 };

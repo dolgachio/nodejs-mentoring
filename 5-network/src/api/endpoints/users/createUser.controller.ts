@@ -17,6 +17,8 @@ import {
 	StatusCodes,
 } from 'http-status-codes';
 
+// Endpoint
+// POST: /users
 const canHandle: CanHandleRequest = ({ method, url }) => {
   const isGetMethod = method === RestMethods.POST;
 

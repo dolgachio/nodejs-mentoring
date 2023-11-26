@@ -14,6 +14,8 @@ import {
 	StatusCodes,
 } from 'http-status-codes';
 
+// Endpoint
+// GET: /users
 const isGetUsers: CanHandleRequest = ({ method, url }) => {
   const isGetMethod = method === RestMethods.GET;
   

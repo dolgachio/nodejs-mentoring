@@ -11,9 +11,10 @@ import { setResponseContentTypeHeader } from "../../../utils/setResponseContentT
 import { getUserIdFromURL } from "./services/getUserIdFromURL";
 import { StatusCodes } from "http-status-codes";
 import { isUserByIdHobbiesURL } from "./services/isUserByIdHobbiesURL";
-import { DefaultDTO } from "../../../models/DefaultDTO";
 import { handleNotFound } from "../notFound";
 
+// Endpoint
+// GET: /users/${userId}/hobbies
 const canHandle: CanHandleRequest = ({ method, url }) => {
   return isUserByIdHobbiesURL(url, method, RestMethods.GET);
 };
@@ -31,6 +32,7 @@ const handleRequest: HandleRequest = async (req, res) => {
 
     res.statusCode = StatusCodes.OK;
     setResponseContentTypeHeader(res, ContentTypes.JSON);
+    res.setHeader("Cache-Control", "public, max-age=6000");
     res.end(JSON.stringify({ data: userHobbies }));
   } catch (error) {
     throw new InternalServerError("Internal Server Error");
