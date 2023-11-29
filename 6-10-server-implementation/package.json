@@ -1,0 +1,26 @@
+{
+  "name": "nodejs-test-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "serve": "npm run build && node dist/index.js",
+    "serve:watch": "nodemon -e ts --exec \"npm run serve\"",
+    "build": "tsc"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.9.0",
+    "nodemon": "^3.0.1",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "@types/express": "^4.17.21",
+    "@types/uuid": "^9.0.7",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "http-status-codes": "^2.3.0",
+    "uuid": "^9.0.1"
+  }
+}
