@@ -42,4 +42,8 @@ All the files related to the task are in `/2-standard-library` folder.
 
 ## 4. Testing in Node.js
 
-[Desccription for the task](./4-testing/README.md)
+[Description for the task](./4-testing/README.md)
+
+## 5. Network
+
+[Description for the task](./5-network/README.md)
