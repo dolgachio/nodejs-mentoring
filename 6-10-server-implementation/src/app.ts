@@ -2,7 +2,10 @@ import express from "express";
 import swaggerUI from "swagger-ui-express";
 import path from "path";
 import YAML from "yamljs";
-import { loggingMiddleware } from "./utils/logging/logging-middleware";
+import { loggingMiddleware } from "./middlewares/logging/logging-middleware";
+
+import { routers } from "./resources";
+import { errorMiddleware } from "./middlewares";
 
 export const app = express();
 
@@ -18,7 +21,12 @@ app.use("/", (req, res, next) => {
     res.send("Service is running!");
     return;
   }
+
   next();
 });
 
 /* Routes only after middleware usage are affected by it */
+app.use("/api/profile/cart", routers.cartRouter);
+app.use("/api/products", routers.productRouter);
+
+app.use(errorMiddleware);
