@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { Repository } from "../types/Repository"
+import { RepositoryBase, RepositoryDelete } from "../types/Repository"
 import { ProductEntity } from "../types/product.entity"
 
 let products: ProductEntity[] = [];
@@ -28,7 +28,8 @@ async function deleteById(id: string): Promise<void> {
     return;
 }
 
-export const productRepository: Repository<ProductEntity> = {
+type ProductRepository = RepositoryBase<ProductEntity> & RepositoryDelete;
+export const productRepository: ProductRepository = {
     all,
     getById,
     deleteById,

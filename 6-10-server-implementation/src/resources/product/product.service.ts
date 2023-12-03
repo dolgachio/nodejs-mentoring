@@ -10,3 +10,12 @@ export async function getAllProducts(): Promise<DefaultDTO<ProductEntity[]>> {
         error: null,
     };
 }
+
+export async function getProductById(productId: string): Promise<DefaultDTO<ProductEntity | null>> {
+    const data = await productRepository.getById(productId);
+
+    return {
+        data,
+        error: null,
+    };
+}
