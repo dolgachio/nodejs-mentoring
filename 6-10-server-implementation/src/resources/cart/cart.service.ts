@@ -1,13 +1,15 @@
 import { cartRepository } from "../../repositories/cart.repository";
 import { createEmptyCartStoredBase } from "../../repositories/createEmptyCartStoredBase";
+import { deleteUserCartFromStorage } from "../../repositories/deleteUserCartFromStorage";
+import { orderRepository } from "../../repositories/order.repository";
 import { productRepository } from "../../repositories/product.repository";
 import { DefaultDTO } from "../../types/DefaultDTO";
-import {
-  CartEntityPublic,
-  CartEntityStored,
-  CartEntityStoredBase,
-} from "../../types/cart.entity";
+import { CartEntityStored, CartTotal } from "../../types/cart.entity";
+import { OrderEntity, OrderEntityBase } from "../../types/order.entity";
+import { NoCartForCheckout } from "./NoCartForCheckoutError";
+import { calculateCartTotal } from "./calculateCartTotal";
 import { mapProductsToCart } from "./mapProductsToCart";
+import { prepareCartTotal } from "./prepareCartTotal";
 import { validateCartUpdate } from "./validateCartUpdate";
 
 async function getCartStored(userId: string): Promise<CartEntityStored> {
@@ -23,38 +25,64 @@ async function getCartStored(userId: string): Promise<CartEntityStored> {
 
 export async function getUserCart(
   userId: string
-): Promise<DefaultDTO<CartEntityPublic>> {
+): Promise<DefaultDTO<CartTotal>> {
   let userCartStored = await getCartStored(userId);
-  if (userCartStored.isDeleted) {
-    await cartRepository.deleteById(userId);
-    const newCartStoredBase = createEmptyCartStoredBase(userId);
-    userCartStored = await cartRepository.createItem(newCartStoredBase);
-  }
 
   const products = await productRepository.getAll();
-  const data = mapProductsToCart(userCartStored, products);
+  const cart = mapProductsToCart(userCartStored, products);
+  const cartTotal = prepareCartTotal(cart);
 
-  return { data, error: null };
+  return { data: cartTotal, error: null };
 }
 
 export async function deleteUserCart(
   userId: string
 ): Promise<DefaultDTO<{ success: boolean }>> {
-  let success = true;
-
-  try {
-    await cartRepository.update(userId, { isDeleted: true });
-  } catch (error) {
-    success = false;
-  }
+  const success = await deleteUserCartFromStorage(userId);
 
   return { data: { success }, error: null };
+}
+
+export async function checkoutUserCart(
+  userId: string
+): Promise<DefaultDTO<{ order: OrderEntity }>> {
+  const cartStored = await cartRepository.getById(userId);
+  if (!cartStored || cartStored.items.length === 0) {
+    throw new NoCartForCheckout("[Cart]: No Cart For Checkout");
+  }
+
+  const products = await productRepository.getAll();
+  const cartWithProducts = mapProductsToCart(cartStored, products);
+
+  const orderBase: OrderEntityBase = {
+    userId,
+    cartId: cartWithProducts.id,
+    items: cartWithProducts.items,
+
+    payment: {
+      type: "paypal",
+    },
+
+    delivery: {
+      type: "post",
+      address: "address",
+    },
+
+    comments: "",
+    status: "created",
+    total: calculateCartTotal(cartWithProducts.items),
+  };
+
+  const createdOrder = await orderRepository.createItem(orderBase);
+  await deleteUserCartFromStorage(userId);
+
+  return { data: { order: createdOrder }, error: null };
 }
 
 export async function updateCart(
   userId: string,
   cartUpdateDTORaw: unknown
-): Promise<DefaultDTO<CartEntityPublic>> {
+): Promise<DefaultDTO<CartTotal>> {
   const { error, value: cartUpdateDTO } = validateCartUpdate(cartUpdateDTORaw);
 
   if (error) {
@@ -75,27 +103,28 @@ export async function updateCart(
     const cartItemIndex = cartItems.findIndex(
       (item) => item.productId === cartUpdateDTO.productId
     );
-    
+
     // Add New Item
     if (cartItemIndex === -1) {
       cartItems = [...cartItems, cartUpdateDTO];
+    } else {
+      // Update Existing Item
+      cartItems = cartItems.map((item) => {
+        if (item.productId === cartUpdateDTO.productId) {
+          return { ...item, count: cartUpdateDTO.count };
+        }
+
+        return item;
+      });
     }
-
-    // Update Existing Item
-    cartItems = cartItems.map((item) => {
-      if (item.productId === cartUpdateDTO.productId) {
-        return { ...item, count: cartUpdateDTO.count };
-      }
-
-      return item;
-    });
   }
 
   const cartStoredUpdated = await cartRepository.update(userId, {
     items: cartItems,
   });
   const products = await productRepository.getAll();
-  const data = mapProductsToCart(cartStoredUpdated, products);
+  const cart = mapProductsToCart(cartStoredUpdated, products);
+  const cartTotal = prepareCartTotal(cart);
 
-  return { data, error: null };
+  return { data: cartTotal, error: null };
 }

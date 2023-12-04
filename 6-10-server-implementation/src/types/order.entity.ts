@@ -2,8 +2,7 @@ import { CartItemEntityPublic, cart } from './cart.entity';
 
 type ORDER_STATUS = 'created' | 'completed';
 
-export interface OrderEntity {
-  id: string, // uuid
+export interface OrderEntityBase {
   userId: string;
   cartId: string;
   items: CartItemEntityPublic[] // products from CartEntity
@@ -19,6 +18,10 @@ export interface OrderEntity {
   comments: string,
   status: ORDER_STATUS;
   total: number;
+}
+
+export interface OrderEntity extends OrderEntityBase {
+  id: string, // uuid
 }
 
 const order: OrderEntity = {

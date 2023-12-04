@@ -1,7 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import {
   RepositoryCreate,
-  RepositoryDelete,
   RepositoryGetSingle,
   RepositoryUpdate,
 } from "../types/Repository";
@@ -10,10 +9,14 @@ import { createEmptyCartStoredBase } from "./createEmptyCartStoredBase";
 
 let carts: CartEntityStored[] = [];
 
+function isCurrentCart(cartItem: CartEntityStored, userId: string): boolean {
+  return cartItem.userId === userId && !cartItem.isDeleted;
+}
+
 export const getById = async (
   userId: string
 ): Promise<CartEntityStored | null> => {
-  return carts.find((cartItem) => cartItem.userId === userId) || null;
+  return carts.find((cartItem) => isCurrentCart(cartItem, userId)) || null;
 };
 
 export const createItem = async (
@@ -32,39 +35,26 @@ export const update = async (
   cartPatch: Partial<CartEntityStored>
 ): Promise<CartEntityStored> => {
   let cartStored = await getById(userId);
-
   if (!cartStored) {
     const newCartBase = createEmptyCartStoredBase(userId);
     cartStored = await createItem(newCartBase);
   }
 
   const { id: _, ...cartPatchNoId } = cartPatch;
-  const cartStoredIndex = carts.findIndex(
-    (item) => item.userId === cartStored?.userId
+  const cartStoredIndex = carts.findIndex((cartItem) =>
+    isCurrentCart(cartItem, userId)
   );
   const cartStoreUpdated = { ...cartStored, ...cartPatchNoId };
   carts[cartStoredIndex] = cartStoreUpdated;
 
-  console.log(carts);
-
   return cartStoreUpdated as CartEntityStored;
 };
 
-export const deleteById = async (
-  userId: string,
-): Promise<void> => {
-  carts = carts.filter((cartItem) => cartItem.userId !== userId);
-
-  return;
-}
-
 type CartRepository = RepositoryGetSingle<CartEntityStored> &
   RepositoryCreate<CartEntityStoredBase, CartEntityStored> &
-  RepositoryUpdate<CartEntityStored> &
-  RepositoryDelete;
+  RepositoryUpdate<CartEntityStored>;
 export const cartRepository: CartRepository = {
   getById,
   createItem,
   update,
-  deleteById,
 };
