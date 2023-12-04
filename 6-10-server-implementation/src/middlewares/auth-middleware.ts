@@ -2,11 +2,12 @@ import { Request, Response, NextFunction } from "express";
 import createError from "http-errors";
 import { userRepository } from "../repositories/user.repository";
 import { wrapAsync } from "../utils";
+import { getUserIdFromHeaders } from "../utils/getUserIdFromHeaders";
 
 export const authMiddleware = wrapAsync(
   async (req: Request, _: Response, next: NextFunction) => {
     const headers = req.headers;
-    let userId = (headers["x-user-id"] || "") as string;
+    let userId = getUserIdFromHeaders(headers);
 
     if (!userId) {
       throw new createError.Forbidden("[Auth]: Authorization info is missing")

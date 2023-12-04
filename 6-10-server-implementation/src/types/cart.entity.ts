@@ -1,25 +1,42 @@
 import { ProductEntity, product as bookProduct } from './product.entity'
 
-export interface CartItemEntity {
+export interface CartItemEntityStored {
+  productId: string;
+  count: number;
+}
+
+export interface CartItemEntityPublic {
   product: ProductEntity;
   count: number;
 }
 
-export interface CartEntity {
-  id: string; // uuid
+interface CartEntityBase<TItemEntity> {
   userId: string;
-  isDeleted: boolean;
-  items: CartItemEntity[];
+  items: TItemEntity[];
 }
 
-const cartItem: CartItemEntity = {
+// Public
+export interface CartEntityPublic extends CartEntityBase<CartItemEntityPublic> {
+  id: string; // uuid
+}
+
+// Stored
+export interface CartEntityStoredBase extends CartEntityBase<CartItemEntityStored> {
+  isDeleted: boolean;
+}
+
+export interface CartEntityStored extends CartEntityStoredBase {
+  id: string; // uuid
+}
+
+const cartItem: CartItemEntityPublic = {
   product: bookProduct,
   count: 2,
 }
 
-export const cart: CartEntity = {
+export const cart: CartEntityPublic = {
   id: '1434fec6-cd85-420d-95c0-eee2301a971d',
   userId: '0fe36d16-49bc-4aab-a227-f84df899a6cb',
-  isDeleted: false,
+  // isDeleted: false,
   items: [cartItem],
 }

@@ -3,7 +3,7 @@ import { DefaultDTO } from "../../types/DefaultDTO";
 import { ProductEntity } from "../../types/product.entity";
 
 export async function getAllProducts(): Promise<DefaultDTO<ProductEntity[]>> {
-    const data = await productRepository.all();
+    const data = await productRepository.getAll();
 
     return {
         data,
