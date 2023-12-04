@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { wrapAsync } from "../../utils";
 import { getUserIdFromHeaders } from "../../utils/getUserIdFromHeaders";
-import { getUserCart, updateCart } from "./cart.service";
+import { deleteUserCart, getUserCart, updateCart } from "./cart.service";
 import createHttpError from "http-errors";
 import Joi from "joi";
 
@@ -37,5 +37,16 @@ router.route("/").put(
 
       throw error;
     } 
+  })
+);
+
+router.route("/").delete(
+  wrapAsync(async (req, res) => {
+    const headers = req.headers;
+    const userId = getUserIdFromHeaders(headers);
+    
+    const responseData = await deleteUserCart(userId);
+    
+    res?.status(200).json(responseData);
   })
 );

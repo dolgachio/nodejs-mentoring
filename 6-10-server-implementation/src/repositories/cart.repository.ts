@@ -1,9 +1,14 @@
 import { v4 as uuidv4 } from "uuid";
-import { RepositoryCreate, RepositoryGetSingle, RepositoryUpdate } from "../types/Repository";
+import {
+  RepositoryCreate,
+  RepositoryDelete,
+  RepositoryGetSingle,
+  RepositoryUpdate,
+} from "../types/Repository";
 import { CartEntityStored, CartEntityStoredBase } from "../types/cart.entity";
 import { createEmptyCartStoredBase } from "./createEmptyCartStoredBase";
 
-const carts: CartEntityStored[] = [];
+let carts: CartEntityStored[] = [];
 
 export const getById = async (
   userId: string
@@ -23,7 +28,7 @@ export const createItem = async (
 };
 
 export const update = async (
-  userId: string, 
+  userId: string,
   cartPatch: Partial<CartEntityStored>
 ): Promise<CartEntityStored> => {
   let cartStored = await getById(userId);
@@ -34,18 +39,32 @@ export const update = async (
   }
 
   const { id: _, ...cartPatchNoId } = cartPatch;
-  const cartStoredIndex = carts.findIndex((item) => item.userId === cartStored?.userId);
+  const cartStoredIndex = carts.findIndex(
+    (item) => item.userId === cartStored?.userId
+  );
   const cartStoreUpdated = { ...cartStored, ...cartPatchNoId };
-
   carts[cartStoredIndex] = cartStoreUpdated;
 
+  console.log(carts);
+
   return cartStoreUpdated as CartEntityStored;
+};
+
+export const deleteById = async (
+  userId: string,
+): Promise<void> => {
+  carts = carts.filter((cartItem) => cartItem.userId !== userId);
+
+  return;
 }
 
 type CartRepository = RepositoryGetSingle<CartEntityStored> &
-  RepositoryCreate<CartEntityStoredBase, CartEntityStored> & RepositoryUpdate<CartEntityStored>;
+  RepositoryCreate<CartEntityStoredBase, CartEntityStored> &
+  RepositoryUpdate<CartEntityStored> &
+  RepositoryDelete;
 export const cartRepository: CartRepository = {
   getById,
   createItem,
   update,
+  deleteById,
 };

@@ -1,4 +1,5 @@
 import { cartRepository } from "../../repositories/cart.repository";
+import { createEmptyCartStoredBase } from "../../repositories/createEmptyCartStoredBase";
 import { productRepository } from "../../repositories/product.repository";
 import { DefaultDTO } from "../../types/DefaultDTO";
 import {
@@ -16,23 +17,38 @@ async function getCartStored(userId: string): Promise<CartEntityStored> {
     return storedCart;
   }
 
-  const newCart: CartEntityStoredBase = {
-    userId,
-    isDeleted: false,
-    items: [],
-  };
-
+  const newCart = createEmptyCartStoredBase(userId);
   return await cartRepository.createItem(newCart);
 }
 
 export async function getUserCart(
   userId: string
 ): Promise<DefaultDTO<CartEntityPublic>> {
-  const userCartStored = await getCartStored(userId);
+  let userCartStored = await getCartStored(userId);
+  if (userCartStored.isDeleted) {
+    await cartRepository.deleteById(userId);
+    const newCartStoredBase = createEmptyCartStoredBase(userId);
+    userCartStored = await cartRepository.createItem(newCartStoredBase);
+  }
+
   const products = await productRepository.getAll();
   const data = mapProductsToCart(userCartStored, products);
 
   return { data, error: null };
+}
+
+export async function deleteUserCart(
+  userId: string
+): Promise<DefaultDTO<{ success: boolean }>> {
+  let success = true;
+
+  try {
+    await cartRepository.update(userId, { isDeleted: true });
+  } catch (error) {
+    success = false;
+  }
+
+  return { data: { success }, error: null };
 }
 
 export async function updateCart(
@@ -59,6 +75,7 @@ export async function updateCart(
     const cartItemIndex = cartItems.findIndex(
       (item) => item.productId === cartUpdateDTO.productId
     );
+    
     // Add New Item
     if (cartItemIndex === -1) {
       cartItems = [...cartItems, cartUpdateDTO];

@@ -1,6 +1,7 @@
 import createError from "http-errors";
 import { logger } from "./logging";
 import { Request, Response, NextFunction } from "express";
+import { DefaultDTO } from "../types/DefaultDTO";
 
 export function errorMiddleware(
   err: any,
@@ -11,7 +12,12 @@ export function errorMiddleware(
   logger.error(JSON.stringify(err));
 
   if (createError.isHttpError(err)) {
-    res.status(err.statusCode).send(err);
+    const errorDTO: DefaultDTO<null> = {
+      data: null,
+      error: err,
+    }
+
+    res.status(err.statusCode).send(errorDTO);
 
     return;
   }
