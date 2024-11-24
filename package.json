@@ -3,6 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "workspaces": [
+    "4-testing",
+    "5-network",
+    "6-10-server-implementation"
+  ],
   "scripts": {
     "start-introduction": "nodemon ./1-introduction-to-nodejs",
     "start-standard-library": "nodemon ./2-standard-library",

@@ -1,5 +1,8 @@
 # NodeJS Mentoring Program Repo
 
+EPAM learn e-book: <https://ebook.learn.epam.com>
+Available only with company sign-in.
+
 ## 1. Introduction to NodeJS
 
 All the files related to the task are in `/1-introduction-to-nodejs` folder.

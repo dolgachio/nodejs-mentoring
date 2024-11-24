@@ -1,7 +1,7 @@
 const path = require("path");
 
-const { logUpdatesToConsole } = require('./utils/logUpdatesToConsole');
-const { logUpdatesToFile } = require('./utils/logUpdatesToFile');
+const { logUpdatesToConsole } = require('./logUpdatesToConsole');
+const { logUpdatesToFile } = require('./logUpdatesToFile');
 
 // 1. Console update
 logUpdatesToConsole();

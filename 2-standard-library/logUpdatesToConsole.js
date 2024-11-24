@@ -1,7 +1,7 @@
 const {
   rewriteCurrentConsoleLine,
-} = require("./rewriteCurrentConsoleLine");
-const { runSystemCheck } = require("./runSystemCheck");
+} = require("./utils/rewriteCurrentConsoleLine");
+const { runSystemCheck } = require("./utils/runSystemCheck");
 
 const logConsoleDelay = 100;
 

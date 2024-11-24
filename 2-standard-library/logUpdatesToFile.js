@@ -1,5 +1,5 @@
 const fs = require('fs');
-const { runSystemCheck } = require('./runSystemCheck');
+const { runSystemCheck } = require('./utils/runSystemCheck');
 
 const logFileDelay = 60000;
 
