@@ -31,4 +31,4 @@ It has a comment with `href` example it can handle.
 #### 1. Additional (optional tasks):
 
 1. ✅ Caching headers are added (hint: hobbies do not change so often).
-2. ✅Hypermedia links (HATEOAS) are included (for each user to retrieve a list of hobbies).
+2. ✅ Hypermedia links (HATEOAS) are included (for each user to retrieve a list of hobbies).
