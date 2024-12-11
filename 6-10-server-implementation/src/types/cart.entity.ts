@@ -1,4 +1,4 @@
-import { ProductEntity, product as bookProduct } from './product.entity'
+import { ProductEntity, product as bookProduct } from '../resources/product/domain/types/product.entity'
 
 export interface CartItemEntityStored {
   productId: string;

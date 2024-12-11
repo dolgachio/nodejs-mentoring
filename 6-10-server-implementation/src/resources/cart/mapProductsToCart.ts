@@ -3,7 +3,7 @@ import {
   CartEntityStored,
   CartItemEntityPublic,
 } from "../../types/cart.entity";
-import { ProductEntity } from "../../types/product.entity";
+import { ProductEntity } from "../product/domain/types/product.entity";
 
 export function mapProductsToCart(
   cartStored: CartEntityStored,

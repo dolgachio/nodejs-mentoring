@@ -3,8 +3,8 @@ import {
   RepositoryGetSingle,
   RepositoryGetAll,
   RepositoryDelete,
-} from "../types/Repository";
-import { ProductEntity } from "../types/product.entity";
+} from "../../../types/Repository";
+import { ProductEntity } from "../domain/types/product.entity";
 
 let products: ProductEntity[] = [
   {
