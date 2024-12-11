@@ -1,4 +1,4 @@
-import { cartRepository } from "../resources/cart/data/cart.repository";
+import { cartRepository } from "../../data/cart.repository";
 
 export async function deleteUserCartFromStorage(userId: string): Promise<boolean> {
   let success = true;

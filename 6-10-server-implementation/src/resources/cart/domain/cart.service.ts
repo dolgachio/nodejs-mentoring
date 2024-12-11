@@ -1,6 +1,4 @@
 import { cartRepository } from "../data/cart.repository";
-import { createEmptyCartStoredBase } from "../../../repositories/createEmptyCartStoredBase";
-import { deleteUserCartFromStorage } from "../../../repositories/deleteUserCartFromStorage";
 import { orderRepository } from "../data/order.repository";
 
 // Move to controller
@@ -15,6 +13,8 @@ import { NoCartForCheckout } from "./errors/NoCartForCheckoutError";
 import { productRepository } from "../../product/data/product.repository";
 
 // Utils
+import { deleteUserCartFromStorage } from "./utils/deleteUserCartFromStorage";
+import { createEmptyCartStoredBase } from "./utils/createEmptyCartStoredBase";
 import { calculateCartTotal } from "./utils/calculateCartTotal";
 import { mapProductsToCart } from "./utils/mapProductsToCart";
 import { prepareCartTotal } from "./utils/prepareCartTotal";
