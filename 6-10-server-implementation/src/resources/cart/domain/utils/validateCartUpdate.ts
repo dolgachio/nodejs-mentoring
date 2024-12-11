@@ -1,5 +1,5 @@
 import Joi from "joi";
-import { CartUpdateDTO } from "../../../../types/CartUpdateDTO";
+import { CartUpdateDTO } from "../../presentation/DTO/CartUpdateDTO";
 
 const productUpdateSchema = Joi.object<CartUpdateDTO>({
     productId: Joi.string().uuid().required(),
