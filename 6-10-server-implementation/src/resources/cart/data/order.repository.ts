@@ -1,4 +1,4 @@
-import { RepositoryCreate } from "../types/Repository";
+import { RepositoryCreate } from "../../../types/Repository";
 import { OrderEntityBase, OrderEntity } from "../types/order.entity";
 import { v4 as uuidv4 } from "uuid";
 

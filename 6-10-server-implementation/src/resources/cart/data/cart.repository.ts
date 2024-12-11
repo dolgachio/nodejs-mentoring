@@ -3,9 +3,9 @@ import {
   RepositoryCreate,
   RepositoryGetSingle,
   RepositoryUpdate,
-} from "../types/Repository";
-import { CartEntityStored, CartEntityStoredBase } from "../types/cart.entity";
-import { createEmptyCartStoredBase } from "./createEmptyCartStoredBase";
+} from "../../../types/Repository";
+import { CartEntityStored, CartEntityStoredBase } from "../domain/types/cart.entity";
+import { createEmptyCartStoredBase } from "../../../repositories/createEmptyCartStoredBase";
 
 let carts: CartEntityStored[] = [];
 

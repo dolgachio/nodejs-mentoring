@@ -1,16 +1,24 @@
-import { cartRepository } from "../../repositories/cart.repository";
-import { createEmptyCartStoredBase } from "../../repositories/createEmptyCartStoredBase";
-import { deleteUserCartFromStorage } from "../../repositories/deleteUserCartFromStorage";
-import { orderRepository } from "../../repositories/order.repository";
-import { DefaultDTO } from "../../types/DefaultDTO";
-import { CartEntityStored, CartTotal } from "../../types/cart.entity";
-import { OrderEntity, OrderEntityBase } from "../../types/order.entity";
-import { productRepository } from "../product/data/product.repository";
-import { NoCartForCheckout } from "./NoCartForCheckoutError";
-import { calculateCartTotal } from "./calculateCartTotal";
-import { mapProductsToCart } from "./mapProductsToCart";
-import { prepareCartTotal } from "./prepareCartTotal";
-import { validateCartUpdate } from "./validateCartUpdate";
+import { cartRepository } from "../data/cart.repository";
+import { createEmptyCartStoredBase } from "../../../repositories/createEmptyCartStoredBase";
+import { deleteUserCartFromStorage } from "../../../repositories/deleteUserCartFromStorage";
+import { orderRepository } from "../data/order.repository";
+
+// Move to controller
+import { DefaultDTO } from "../../../types/DefaultDTO";
+
+// Entities
+import { CartEntityStored, CartTotal } from "./types/cart.entity";
+import { OrderEntity, OrderEntityBase } from "./types/order.entity";
+import { NoCartForCheckout } from "./errors/NoCartForCheckoutError";
+
+// Product Dependency potentially replace with service usage
+import { productRepository } from "../../product/data/product.repository";
+
+// Utils
+import { calculateCartTotal } from "./utils/calculateCartTotal";
+import { mapProductsToCart } from "./utils/mapProductsToCart";
+import { prepareCartTotal } from "./utils/prepareCartTotal";
+import { validateCartUpdate } from "./utils/validateCartUpdate";
 
 async function getCartStored(userId: string): Promise<CartEntityStored> {
   let storedCart = await cartRepository.getById(userId);

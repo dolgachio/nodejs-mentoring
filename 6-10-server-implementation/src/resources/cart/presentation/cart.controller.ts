@@ -1,10 +1,11 @@
 import { Router } from "express";
-import { wrapAsync } from "../../utils";
-import { getUserIdFromHeaders } from "../../utils/getUserIdFromHeaders";
-import { checkoutUserCart, deleteUserCart, getUserCart, updateCart } from "./cart.service";
+import { wrapAsync } from "../../../utils";
+import { getUserIdFromHeaders } from "../../../utils/getUserIdFromHeaders";
+import { checkoutUserCart, deleteUserCart, getUserCart, updateCart } from "../domain/cart.service";
 import createHttpError from "http-errors";
 import Joi from "joi";
-import { NoCartForCheckout } from "./NoCartForCheckoutError";
+
+import { NoCartForCheckout } from "../domain/errors/NoCartForCheckoutError";
 
 export const router = Router();
 
