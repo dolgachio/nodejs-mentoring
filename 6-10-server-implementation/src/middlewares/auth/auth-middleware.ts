@@ -1,8 +1,10 @@
 import { Request, Response, NextFunction } from "express";
 import createError from "http-errors";
-import { userRepository } from "../repositories/user.repository";
-import { wrapAsync } from "../utils";
-import { getUserIdFromHeaders } from "../utils/getUserIdFromHeaders";
+import { userRepository } from "./user.repository";
+
+import { wrapAsync } from "../../utils";
+
+import { getUserIdFromHeaders } from "../../utils/getUserIdFromHeaders";
 
 export const authMiddleware = wrapAsync(
   async (req: Request, _: Response, next: NextFunction) => {

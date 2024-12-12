@@ -1,9 +1,6 @@
 import { cartRepository } from "../data/cart.repository";
 import { orderRepository } from "../data/order.repository";
 
-// Move to controller
-import { DefaultDTO } from "../../../types/DefaultDTO";
-
 // Entities
 import { CartEntityStored, CartTotal } from "./types/cart.entity";
 import { OrderEntity, OrderEntityBase } from "./types/order.entity";
@@ -31,29 +28,27 @@ async function getCartStored(userId: string): Promise<CartEntityStored> {
   return await cartRepository.createItem(newCart);
 }
 
-export async function getUserCart(
-  userId: string
-): Promise<DefaultDTO<CartTotal>> {
+export async function getUserCart(userId: string): Promise<CartTotal> {
   let userCartStored = await getCartStored(userId);
 
   const products = await productRepository.getAll();
   const cart = mapProductsToCart(userCartStored, products);
   const cartTotal = prepareCartTotal(cart);
 
-  return { data: cartTotal, error: null };
+  return cartTotal;
 }
 
 export async function deleteUserCart(
   userId: string
-): Promise<DefaultDTO<{ success: boolean }>> {
+): Promise<{ success: boolean }> {
   const success = await deleteUserCartFromStorage(userId);
 
-  return { data: { success }, error: null };
+  return { success };
 }
 
 export async function checkoutUserCart(
   userId: string
-): Promise<DefaultDTO<{ order: OrderEntity }>> {
+): Promise<{ order: OrderEntity }> {
   const cartStored = await cartRepository.getById(userId);
   if (!cartStored || cartStored.items.length === 0) {
     throw new NoCartForCheckout("[Cart]: No Cart For Checkout");
@@ -84,13 +79,13 @@ export async function checkoutUserCart(
   const createdOrder = await orderRepository.createItem(orderBase);
   await deleteUserCartFromStorage(userId);
 
-  return { data: { order: createdOrder }, error: null };
+  return { order: createdOrder };
 }
 
 export async function updateCart(
   userId: string,
   cartUpdateDTORaw: unknown
-): Promise<DefaultDTO<CartTotal>> {
+): Promise<CartTotal> {
   const { error, value: cartUpdateDTO } = validateCartUpdate(cartUpdateDTORaw);
 
   if (error) {
@@ -134,5 +129,5 @@ export async function updateCart(
   const cart = mapProductsToCart(cartStoredUpdated, products);
   const cartTotal = prepareCartTotal(cart);
 
-  return { data: cartTotal, error: null };
+  return cartTotal;
 }
