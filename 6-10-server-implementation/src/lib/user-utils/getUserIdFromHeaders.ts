@@ -1,4 +1,4 @@
-import { userIdHeader } from "../constants/userIdHeader";
+import { userIdHeader } from "../../constants/userIdHeader";
 
 export function getUserIdFromHeaders(headers: { [key: string]: string | string[] | undefined }): string {
      const userId = headers[userIdHeader];

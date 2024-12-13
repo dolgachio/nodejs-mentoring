@@ -1,9 +1,10 @@
 import { Router } from "express";
-import { wrapAsync } from "../../../utils";
-import { getAllProducts, getProductById } from "../domain/product.service";
 import createError from "http-errors";
-import { DefaultDTO } from "../../../types/DefaultDTO";
-import { ProductEntity } from "../domain/types/product.entity";
+import { DefaultDTO } from "../../types/DefaultDTO";
+
+import { getAllProducts, getProductById } from "./domain/product.service";
+import { ProductEntity } from "./domain/types/product.entity";
+import { wrapAsync } from "../../lib/async";
 
 export const router = Router();
 

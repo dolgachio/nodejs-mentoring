@@ -3,9 +3,8 @@ import Joi from "joi";
 import createHttpError from "http-errors";
 
 // Utils and Shared
-import { wrapAsync } from "../../../utils";
-import { getUserIdFromHeaders } from "../../../utils/getUserIdFromHeaders";
-import { DefaultDTO } from "../../../types/DefaultDTO";
+import { getUserIdFromHeaders } from "../../lib/user-utils/getUserIdFromHeaders";
+import { DefaultDTO } from "../../types/DefaultDTO";
 
 // Domain
 import {
@@ -13,10 +12,11 @@ import {
   deleteUserCart,
   getUserCart,
   updateCart,
-} from "../domain/cart.service";
-import { NoCartForCheckout } from "../domain/errors/NoCartForCheckoutError";
-import { CartTotal } from "../domain/types/cart.entity";
-import { OrderEntity } from "../domain/types/order.entity";
+} from "./domain/cart.service";
+import { NoCartForCheckout } from "./domain/errors/NoCartForCheckoutError";
+import { CartTotal } from "./domain/types/cart.entity";
+import { OrderEntity } from "./domain/types/order.entity";
+import { wrapAsync } from "../../lib/async";
 
 export const router = Router();
 

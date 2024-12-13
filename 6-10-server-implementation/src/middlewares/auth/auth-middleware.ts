@@ -4,7 +4,7 @@ import { userRepository } from "./user.repository";
 
 import { wrapAsync } from "../../utils";
 
-import { getUserIdFromHeaders } from "../../utils/getUserIdFromHeaders";
+import { getUserIdFromHeaders } from "../../lib/user-utils/getUserIdFromHeaders";
 
 export const authMiddleware = wrapAsync(
   async (req: Request, _: Response, next: NextFunction) => {
