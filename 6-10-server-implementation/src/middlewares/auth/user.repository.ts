@@ -1,7 +1,7 @@
 import { RepositoryGetAll, RepositoryGetSingle } from "../../types/Repository";
-import { user, UserEntity } from "../../types/user.entity";
+import { user, user2, UserEntity } from "../../types/user.entity";
 
-let users: UserEntity[] = [user];
+let users: UserEntity[] = [user, user2];
 
 async function getAll(): Promise<UserEntity[]> {
   return users;

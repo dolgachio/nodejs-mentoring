@@ -16,7 +16,7 @@ const swaggerDocument = YAML.load(path.join(__dirname, "./doc/swagger.yaml"));
 
 app.use(express.json());
 app.use(loggingMiddleware);
-app.use("/doc", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
+app.use("/swagger", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 app.use("/", (req, res, next) => {
   if (req.originalUrl === "/") {
