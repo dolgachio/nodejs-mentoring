@@ -1,11 +1,11 @@
 import { RepositoryCreate } from "../../../types/Repository";
-import { OrderEntityBase, OrderEntity } from "../types/order.entity";
 import { v4 as uuidv4 } from "uuid";
+import { OrderEntity, OrderEntityBase } from "../domain/types/order.entity";
 
 let orders: OrderEntity[] = [];
 
 async function createItem(
-  orderEntityBase: OrderEntityBase
+  orderEntityBase: OrderEntityBase,
 ): Promise<OrderEntity> {
   const id = uuidv4();
 
